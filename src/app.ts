@@ -53,7 +53,7 @@ app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ic
 // app.get('/', function(req, res) { Utils.initSampleDataAndRenderView(req, res, 'apidemo.ejs') });
 app.get("/", function (req, res) {
   if (req.query.code === undefined) {
-    const redirectUri = `https://${process.env.BASE_URL}.auth.marketingcloudapis.com/v2/authorize?response_type=code&client_id=${process.env.DF18DEMO_CLIENTID}&redirect_uri=${process.env.REDIRECT_URL}`;
+    const redirectUri = `https://${process.env.BASE_URL}.auth.marketingcloudapis.com/v2/authorize?response_type=code&client_id=${process.env.CLIENTID}&redirect_uri=${process.env.REDIRECT_URL}`;
 
     res.redirect(redirectUri);
   } else {
