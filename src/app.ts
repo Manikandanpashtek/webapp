@@ -24,7 +24,7 @@ app.set("views", path.join(__dirname, "../views"));
 app.set('view engine', 'ejs');
 
 var pgp = require('./pgpromise.js');  
-var db= require('./database.js') 
+import * as db from"./database.js"
 
 // Use helmet. More info: https://expressjs.com/en/advanced/best-practice-security.html
 var helmet = require('helmet')
