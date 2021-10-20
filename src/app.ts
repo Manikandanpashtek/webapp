@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Setup static paths
 app.use(express.static(path.join(__dirname, "../static")));
-app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname,'../static','images','favicons', 'favicon.ico')));
 
 // Routes: pages
 // app.get('/', function(req, res) { Utils.initSampleDataAndRenderView(req, res, 'apidemo.ejs') });
