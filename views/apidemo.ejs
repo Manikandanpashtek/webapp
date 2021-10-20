@@ -1,181 +1,1338 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-  <script
+
+<html lang="en">
+  
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"
+      integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA=="
+      crossorigin="anonymous"
+    ></script>
+    <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"
       integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ=="
       crossorigin="anonymous"
     ></script>
-    <title>OutPut Page </title>
-    <!-- <script src="/src/SfmcApiHelper.ts"></script> -->
-    <button type="button" id="btnGetOauthToken" class="btn btn-primary"
-    onclick="accessTokenGeneration()">ACCESS TOKEN</button>
-    <p id="demo" style="color:green;"></p>
-    <p id="demo1" style="color:red;"></p>
-    <input id="myInput" type="text" value="no username" />
-    <button type="button" id="btnGetOauthToken" class="btn btn-primary"
-    onclick="Journey Builder()">Journey</button>
-    <!-- <button type="button" id="AppUserInfo" class="btn btn-primary"
-    onclick="AppUserInfo()">AppUserInfo</button> -->
-    <!-- <body>
-      <h3>Enter Dataextension Name</h3>
-      <input type="text" id="txt"/>
-      <input type="submit" id="btSubmit"  onclick="creatingDomainConfigurationDE()" disabled />
-      <p id="demo2" style="color:green;"></p>
-      <p id="demo4" style="color:rgb(13, 0, 128);"></p>
-    <p id="demo3" style="color:red;"></p>
-  </body> -->
-    <br><br>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"
+      integrity="sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- "content_security_policy":"script-src 'self' https://example.com; object-src
+    'self'" -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script>
+   /*   <!-- padding: 3px 15px;
+    width: 78px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 175, 178);
+    height: 35px; --> */
+      var count1=1;
+      var count2=1;
+      var count3=1;
+      var count4=1;
+      var count5=1;
+      var count6=1;
+      var count7=1;
+      var count8=1;
+      var count9=1;
+      var count10=1;
+      var count11=1;
+      var count12=1;
+      var journeyNames = new Array();
+      function setColor1(index){
+        console.log(index)
+       /* for (var j = 0; j< response.data.activity.items.length; j++) {
+          journeyName.push(response.data.activity.items[j])
+          console.log("response.data.activity.items[j]>>>>",response.data.activity.items[j]) */
+        //var property = document.getElementById(btn);
+        if (count1 == 0){
+          var journeyName = journeyNames.indexOf(index.dataset)
+          if (journeyName > -1) 
+         {
+          journeyNames.splice(journeyName, 1);
+        }
+          document.getElementById('CartAbandon').innerHTML = 'add';
+          document.getElementById('CartAbandon').className="btn border_add outline-btn"
+          document.getElementById('CartAbandon').style.backgroundColor = '' ;
+          document.getElementById('CartAbandon').style.color ='#46AFB2'; 
+            count1=1;        
+        }
+        else{
+          journeyNames.push(index.dataset)
+          document.getElementById('CartAbandon').innerHTML ='remove';
+          document.getElementById('CartAbandon').className=" btn border_remove"
+          document.getElementById('CartAbandon').style.padding ='3px 2px';
+          document.getElementById('CartAbandon').style.backgroundColor ='#46AFB2'; 
+          document.getElementById('CartAbandon').style.color ='#ffffff';
+            count1=0;
+        }
     
-</head>
-<body>
-  <script>
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const authorization_code = urlParams.get('code');
-    console.log("authorization_code",authorization_code);
-    // const tssd = urlParams.get('tssd');
-    const tssd ="mcj6cy1x9m-t5h5tz0bfsyqj38ky";
-
-    console.log("tssd=",tssd);
-      function accessTokenGeneration(req,res) {
-        
-        axios({
-          method: "POST",
-          url: "/appdemoauthtoken",
-          data: {
-            authorization_code:authorization_code,
-            tssd: tssd
-          },
-        })
-          .then(function (response) {
-            console.log("response>>>>",response);
-            console.log("response.data.refresh_token",response.data.refresh_token);
-
-            console.log(
-                "accesstokengeneration:" +
-                JSON.stringify(response.data.refreshToken)
-
-            );
-            let apptoken = response.data.refreshToken;
-             AppUserInfo( apptoken)
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-
-
-
-      // // creating Sparkpost Integration Data folder
-      // function createSparkpostIntegrationFolder(response) {
-      //   console.log("sparkpost integretion",response);
-      //   axios({
-      //     method: "POST",
-      //     url: "/createsparkpostintegrationfolder",
-      //     data: {
-      //         accessToken:response.oauthAccessToken
-      //     }
-      //   })
-      //     .then(function (response) {
-      //       console.log(
-      //         "createSparkpostIntegrationFolder:" +
-      //           JSON.stringify(response.data)
-      //       );
-      //       // if (response.data.statusText) {
-      //       //   thisdata.setState({ refreshtoken: response.data.refreshToken });
-      //       //   thisdata.setState({ FolderID: response.data.FolderID });
-              
-      //       //   // creatingDomainConfigurationDE(req,res)
-      //       // } else {
-      //       //   console.log("Error creating data extension folder");
-      //       // }
-      //     })
-      //     .catch(function (error) {
-      //       console.log(error);
-      //     });
-      // }
-
-     
-//   function creatingDomainConfigurationDE(req,res)
+    }
+    
+    function setColor2(index){
+      console.log(index)
  
-//  {
-//    var dataextensionname = document.getElementById("txt").value;
-//    console.log("dataextensionname=",dataextensionname);
-//   //  console.log("methodcalled");
-//        axios({
-//          method: "POST",
-//          url: "/creatingDomainConfigurationDE",
-//          data: {
-//           dataextensionname : dataextensionname,
-//            soap_instance_url: "https://mcj6cy1x9m-t5h5tz0bfsyqj38ky.soap.marketingcloudapis.com/",
-           
-//          },
-         
-//        })
-//          .then(function (response) {
-//            console.log(
-//              "creatingDomainConfigurationDE:" + JSON.stringify(response)
-//            );
-//            document.getElementById("demo2").innerHTML = "dataextension created";
-//            document.getElementById("demo4").innerHTML = JSON.stringify(response);
-//            // if (response.data) {
-           
-//            //   thisdata.setState({
-//            //     DEexternalKeyDomainConfiguration:
-//            //       response.data.DEexternalKeyDomainConfiguration,
-//            //   });
-            
-//            // } else {
-//            //   console.log("Error creating data extension folder");
-//            // }
-//          })
-//          .catch(function (error) {
-//           document.getElementById("demo3").innerHTML = "dataextension not created";
-//            console.log(error);
-//          });
-//      }
-      
-     function AppUserInfo( apptoken ) {
-       console.log("response.data.oauthToken", apptoken);
-        axios({
-          method: "POST",
-          url: "/appuserinfo",
-          data: { refreshToken: apptoken, tssd:tssd },
-
-        })
-          .then(function (response) {
-            console.log("response>>>>",response);
-            var test = response.data.username;
-              document.getElementById("myInput").value = test;
-          })
-          //   console.log("appuserinfo:" + JSON.stringify(response));
-
-          //   thisdata.setState({ namex: response.data });
-          //   thisdata.setState({ refreshtoken: response.data.refreshToken });
-          //   thisdata.setState({ member_id: response.data.member_id });
-          //   thisdata.setState({
-          //     restInstance: response.data.rest_instance_url,
-          //   });
-          //   thisdata.setState({
-          //     soapInstance: response.data.soap_instance_url,
-          //   });
-
-          //   dataFolderCheck(
-          //     thisdata,
-          //     response.data.refreshToken,
-          //     response.data.member_id,
-          //     response.data.rest_instance_url,
-          //     response.data.soap_instance_url
-          //   );
-          // })
-          .catch(function (error) {
-            console.log(error);
-          });
+       if (count2 == 0){
+        var journeyName = journeyNames.indexOf(index.dataset)
+        if (journeyName > -1) 
+       {
+        journeyNames.splice(journeyName, 1);
       }
-  </script>
-
-</body>
-</html>
+         document.getElementById('Conquest').innerHTML = 'add';
+         document.getElementById('Conquest').className="btn border_add outline-btn"
+         document.getElementById('Conquest').style.backgroundColor = '' ;
+         document.getElementById('Conquest').style.color ='#46AFB2'; 
+           count2=1;        
+       }
+       else{
+        journeyNames.push(index.dataset)
+         document.getElementById('Conquest').innerHTML ='remove';
+         document.getElementById('Conquest').className=" btn border_remove"
+         document.getElementById('Conquest').style.padding ='3px 2px';
+         document.getElementById('Conquest').style.backgroundColor ='#46AFB2'; 
+         document.getElementById('Conquest').style.color ='#ffffff';
+           count2=0;
+       }
    
+   }
+   function setColor3(index){
+    console.log(index)
+  
+     if (count3 == 0){
+      var journeyName = journeyNames.indexOf(index.dataset)
+      if (journeyName > -1) 
+     {
+      journeyNames.splice(journeyName, 1);
+     }
+       document.getElementById('FriendsFamily').innerHTML = 'add';
+       document.getElementById('FriendsFamily').className="btn border_add outline-btn"
+       document.getElementById('FriendsFamily').style.backgroundColor = '' ;
+       document.getElementById('FriendsFamily').style.color ='#46AFB2'; 
+         count3=1;        
+     }
+     else{
+      journeyNames.push(index.dataset)
+       document.getElementById('FriendsFamily').innerHTML ='remove';
+       document.getElementById('FriendsFamily').className=" btn border_remove"
+       document.getElementById('FriendsFamily').style.padding ='3px 2px';
+       document.getElementById('FriendsFamily').style.backgroundColor ='#46AFB2'; 
+       document.getElementById('FriendsFamily').style.color ='#ffffff';
+         count3=0;
+     }
+ 
+ }
+ function setColor4(index){
+  console.log(index)
+
+   if (count4 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Compliments').innerHTML = 'add';
+     document.getElementById('Compliments').className="btn border_add outline-btn"
+     document.getElementById('Compliments').style.backgroundColor = '' ;
+     document.getElementById('Compliments').style.color ='#46AFB2'; 
+       count4=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Compliments').innerHTML ='remove';
+     document.getElementById('Compliments').className=" btn border_remove"
+     document.getElementById('Compliments').style.padding ='3px 2px';
+     document.getElementById('Compliments').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Compliments').style.color ='#ffffff';
+       count4=0;
+   }
+
+}
+function setColor5(index){
+  console.log(index)
+
+   if (count5 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Referral').innerHTML = 'add';
+     document.getElementById('Referral').className="btn border_add outline-btn"
+     document.getElementById('Referral').style.backgroundColor = '' ;
+     document.getElementById('Referral').style.color ='#46AFB2'; 
+       count5=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Referral').innerHTML ='remove';
+     document.getElementById('Referral').className=" btn border_remove"
+     document.getElementById('Referral').style.padding ='3px 2px';
+     document.getElementById('Referral').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Referral').style.color ='#ffffff';
+       count5=0;
+   }
+
+}
+function setColor6(index){
+  console.log(index)
+
+   if (count6 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Anniversary').innerHTML = 'add';
+     document.getElementById('Anniversary').className="btn border_add outline-btn"
+     document.getElementById('Anniversary').style.backgroundColor = '' ;
+     document.getElementById('Anniversary').style.color ='#46AFB2'; 
+       count6=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Anniversary').innerHTML ='remove';
+     document.getElementById('Anniversary').className=" btn border_remove"
+     document.getElementById('Anniversary').style.padding ='3px 2px';
+     document.getElementById('Anniversary').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Anniversary').style.color ='#ffffff';
+       count6=0;
+   }
+
+}
+function setColor7(index){
+  console.log(index)
+  
+   if (count7 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('ProductTest').innerHTML = 'add';
+     document.getElementById('ProductTest').className="btn border_add outline-btn"
+     document.getElementById('ProductTest').style.backgroundColor = '' ;
+     document.getElementById('ProductTest').style.color ='#46AFB2'; 
+       count7=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('ProductTest').innerHTML ='remove';
+     document.getElementById('ProductTest').className=" btn border_remove"
+     document.getElementById('ProductTest').style.padding ='3px 2px';
+     document.getElementById('ProductTest').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('ProductTest').style.color ='#ffffff';
+       count7=0;
+   }
+
+}
+function setColor8(index){
+  console.log(index)
+  
+   if (count8 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Repeat').innerHTML = 'add';
+     document.getElementById('Repeat').className="btn border_add outline-btn"
+     document.getElementById('Repeat').style.backgroundColor = '' ;
+     document.getElementById('Repeat').style.color ='#46AFB2'; 
+       count8=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Repeat').innerHTML ='remove';
+     document.getElementById('Repeat').className=" btn border_remove"
+     document.getElementById('Repeat').style.padding ='3px 2px';
+     document.getElementById('Repeat').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Repeat').style.color ='#ffffff';
+       count8=0;
+   }
+
+}
+function setColor9(index){
+  console.log(index)
+ 
+   if (count9 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('VIP').innerHTML = 'add';
+     document.getElementById('VIP').className="btn border_add outline-btn"
+     document.getElementById('VIP').style.backgroundColor = '' ;
+     document.getElementById('VIP').style.color ='#46AFB2'; 
+       count9=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('VIP').innerHTML ='remove';
+     document.getElementById('VIP').className=" btn border_remove"
+     document.getElementById('VIP').style.padding ='3px 2px';
+     document.getElementById('VIP').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('VIP').style.color ='#ffffff';
+       count9=0;
+   }
+
+}
+function setColor10(index){
+  console.log(index)
+
+   if (count10 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Offer').innerHTML = 'add';
+     document.getElementById('Offer').className="btn border_add outline-btn"
+     document.getElementById('Offer').style.backgroundColor = '' ;
+     document.getElementById('Offer').style.color ='#46AFB2'; 
+       count10=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Offer').innerHTML ='remove';
+     document.getElementById('Offer').className=" btn border_remove"
+     document.getElementById('Offer').style.padding ='3px 2px';
+     document.getElementById('Offer').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Offer').style.color ='#ffffff';
+       count10=0;
+   }
+
+}
+function setColor11(index){
+  console.log(index)
+ 
+   if (count11 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Preferences').innerHTML = 'add';
+     document.getElementById('Preferences').className="btn border_add outline-btn"
+     document.getElementById('Preferences').style.backgroundColor = '' ;
+     document.getElementById('Preferences').style.color ='#46AFB2'; 
+       count11=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Preferences').innerHTML ='remove';
+     document.getElementById('Preferences').className=" btn border_remove"
+     document.getElementById('Preferences').style.padding ='3px 2px';
+     document.getElementById('Preferences').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Preferences').style.color ='#ffffff';
+       count11=0;
+   }
+
+}
+function setColor12(index){
+  console.log(index)
+  
+   if (count12 == 0){
+    var journeyName = journeyNames.indexOf(index.dataset)
+    if (journeyName > -1) 
+   {
+    journeyNames.splice(journeyName, 1);
+   }
+     document.getElementById('Replenishment').innerHTML = 'add';
+     document.getElementById('Replenishment').className="btn border_add outline-btn"
+     document.getElementById('Replenishment').style.backgroundColor = '' ;
+     document.getElementById('Replenishment').style.color ='#46AFB2'; 
+       count12=1;        
+   }
+   else{
+    journeyNames.push(index.dataset)
+     document.getElementById('Replenishment').innerHTML ='remove';
+     document.getElementById('Replenishment').className=" btn border_remove"
+     document.getElementById('Replenishment').style.padding ='3px 2px';
+     document.getElementById('Replenishment').style.backgroundColor ='#46AFB2'; 
+     document.getElementById('Replenishment').style.color ='#ffffff';
+       count12=0;
+   }
+
+}
+    </script>
+    <title></title>
+    <style></style>
+  </head>
+  <body>
+    <section class="wiz-head">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11 pd-112">
+            <ul class="list-unstyled d-flex justify-content-around mb-2">
+              <li class="active">
+                <a href="#">Marketing channels/ Products</a>
+              </li>
+              <li><a href="#">Marketing Assets</a></li>
+              <li>
+                <a href="#">Orkestra<sup>TM</sup> Journeys</a>
+              </li>
+              <li><a href="#">Review</a></li>
+            </ul>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <a href="javascript:;">
+              <img
+                src="img/retail_general.png"
+                class="head-img"
+                alt="Orkestra Retail"
+                style="height: auto; width: 30px"
+              />
+              <p class="head-retail mb-0">Retail</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="marketing-product">
+      <div class="market-retail-sec">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/retail_general.png"
+                    class=""
+                    alt="Orkestra Retail"
+                    style="height: auto; width: 42px"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">Orkestra<sup>TM</sup> For Retail</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 col-lg-11 offset-md-1 offset-lg-1">
+              <p class="">
+                Welcome to Conductor, please select, highlight all options is
+                each section to configure the instance for Apple.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="market-retail-sec pt-0">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/marketingCloudLogo.png"
+                    class="star-channel"
+                    alt="Orkestra Retail"
+                    style="height: auto; width: 42px"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">
+                    Please Select/ Verify all eligible channels
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-12">
+						<div class="market-retail d-flex">
+							<img src="img/star32.png" class="star-channel mr-5" alt="Orkestra Retail" />
+							<h5 class="align-self-center mb-0">Please Select/ Verify all eligible channels</h5>
+						</div>
+					</div> -->
+          </div>
+          <div class="row desk-plr-68 new">
+            <div class="col-md-3 col-lg-3">
+              <input
+                type="radio"
+                class="btn-check cust-type"
+                name="channel"
+                id="email-radio"
+                checked
+              />
+              <label class="btn btn-channel" for="email-radio">
+                <div class="market-channels">
+                  <img
+                    src="img/emailStudio.png"
+                    class=""
+                    alt="Orkestra Retail"
+                  />
+                </div>
+              </label>
+              <p class="channel-text">Email</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+              <input
+                type="radio"
+                class="btn-check cust-type"
+                name="channel"
+                id="mobile-radio"
+              />
+              <label class="btn btn-channel" for="mobile-radio">
+                <div class="market-channels">
+                  <img
+                    src="img/mobileStudio.png"
+                    class=""
+                    alt="Orkestra Retail"
+                  />
+                </div>
+              </label>
+              <p class="channel-text">Mobile</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+              <input
+                type="radio"
+                class="btn-check cust-type"
+                name="channel"
+                id="push-radio"
+              />
+              <label class="btn btn-channel" for="push-radio">
+                <div class="market-channels">
+                  <img
+                    src="img/socialStudio.png"
+                    class=""
+                    alt="Orkestra Retail"
+                  />
+                </div>
+              </label>
+              <p class="channel-text">Push</p>
+            </div>
+            <div class="col-md-3 col-lg-3">
+              <input
+                type="radio"
+                class="btn-check cust-type"
+                name="channel"
+                id="ads-radio"
+              />
+              <label class="btn btn-channel" for="ads-radio">
+                <div class="market-channels">
+                  <img src="img/adStudio.png" class="" alt="Orkestra Retail" />
+                </div>
+              </label>
+              <p class="channel-text">Ads</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="market-retail-sec pt-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn cancel-btn" id="cancel-one">
+                Cancel
+              </button>
+              <button type="button" class="btn next-btn" id="next-one">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="marketing-assets">
+      <div class="market-retail-sec">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/marketingCloudLogo.png"
+                    class="star-channel"
+                    alt="Orkestra Retail"
+                    style="height: auto; width: 42px"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">
+                    Please select all eligible Customer Types
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 col-lg-11 offset-lg-1 offset-md-1">
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="options"
+                id="option1"
+                checked
+              />
+              <label class="btn btn-customer" for="option1">Consumers</label>
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="options"
+                id="option2"
+              />
+              <label class="btn btn-customer" for="option2">Distributors</label>
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="options"
+                id="option3"
+              />
+              <label class="btn btn-customer" for="option3">Wholesale</label>
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="options"
+                id="option4"
+                checked
+              />
+              <label class="btn btn-customer" for="option4">Partners</label>
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="options"
+                id="option5"
+              />
+              <label class="btn btn-customer" for="option5">Buyers</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="market-retail-sec">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/marketingCloudLogo.png"
+                    class="star-channel"
+                    alt="Orkestra Retail"
+                    style="height: auto; width: 42px"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">Please select all eligible Products</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 col-lg-11 offset-lg-1 offset-md-1">
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="products"
+                id="product1"
+              />
+              <label class="btn btn-customer" for="product1">Goods</label>
+              <input
+                type="checkbox"
+                class="btn-check cust-type"
+                name="products"
+                id="product2"
+                checked
+              />
+              <label class="btn btn-customer" for="product2">Services</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="market-retail-sec pt-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn cancel-btn" id="cancel-two">
+                Cancel
+              </button>
+              <button type="button" class="btn next-btn" id="next-two">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="marketing-retail">
+      <div class="market-retail-sec">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/journeyIcon.png"
+                    class=""
+                    alt="Orkestra Retail"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">
+                    Please select all Orkestra<sup>TM</sup> Journeys to include
+                    in your "solution".
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="scrollable"> -->
+            <div class="row mb-3">
+              <div class="col-md-11 col-lg-11 offset-lg-1 offset-md-1">
+                <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="d-flex journeyCard">
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Cart Abandon</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            id="CartAbandon"
+                            data-journeyKey="CartAbandon"
+                            class="btn border_add outline-btn" onclick="setColor1(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Conquest"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Conquest</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Conquest"
+                            data-journeyKey="Conquest"
+                            class="btn border_add outline-btn" onclick="setColor2(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/friends.png"
+                            class="mb-4"
+                            alt="FriendsFamily"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Friends/ Family</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="FriendsFamily"
+                            data-journeyKey="FriendsFamily"
+                            class="btn border_add outline-btn" onclick="setColor3(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Compliments"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Compliments</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Compliments"
+                            data-journeyKey="Compliments"
+                            class="btn border_add outline-btn" onclick="setColor4(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/star.png"
+                            class="mb-4"
+                            alt="Referral"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Referral</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Referral"
+                            data-journeyKey="Referral_Retail001"
+                            class="btn border_add outline-btn" onclick="setColor5(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/calendar.png"
+                            class="mb-4"
+                            alt="Anniversary"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Anniversary</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Anniversary"
+                            data-journeyKey="Win_Back_Retail001"
+                            class="btn border_add outline-btn" onclick="setColor6(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="d-flex journeyCard">
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/product.png"
+                            class="mb-4"
+                            alt="Product Test"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Product Test</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="ProductTest"
+                            data-journeyKey="ProductTest"
+                            class="btn border_add outline-btn" onclick="setColor7(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/repeat.png"
+                            class="mb-4"
+                            alt="Repeat"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Repeat</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Repeat"
+                            data-journeyKey="Repeat"
+                            class="btn border_add outline-btn" onclick="setColor8(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/vip.png"
+                            class="mb-4"
+                            alt="VIP"
+                            width="30px"
+                          />
+                          <h6 class="card-title">VIP</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="VIP"
+                            data-journeyKey="VIP"
+                            class="btn border_add outline-btn" onclick="setColor9(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/tag.png"
+                            class="mb-4"
+                            alt="Offer"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Offer</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Offer"
+                            data-journeyKey="Offer"
+                            class="btn border_add outline-btn" onclick="setColor10(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/controls.png"
+                            class="mb-4"
+                            alt="Preferences"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Preferences</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Preferences"
+                            data-journeyKey="Preferences"
+                            class="btn border_add outline-btn" onclick="setColor11(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Replenishment"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Replenishment</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            id="Replenishment"
+                            data-journeyKey="Replenishment"
+                            class="btn border_add outline-btn" onclick="setColor12(this)"
+                            >add</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="d-flex journeyCard">
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Cart Abandon</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Conquest</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/friends.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Friends/ Family</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/shopping-cart.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Compliments</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/star.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Referral</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img
+                            src="img/calendar.png"
+                            class="mb-4"
+                            alt="Cart Abandon"
+                            width="30px"
+                          />
+                          <h6 class="card-title">Anniversary</h6>
+                        </div>
+                        <div class="card-footer">
+                          <a href="#" class="info-btn"
+                            >info
+                            <i
+                              class="fa fa-long-arrow-right"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a href="#" class="btn border_add outline-btn">add</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="market-retail-sec pt-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="btn cancel-btn" id="cancel-three">
+                Cancel
+              </button>
+              <button type="button" class="btn next-btn" id="next-three" onclick="getId()">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="marketing-review">
+      <div class="market-retail-sec">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-1">
+                  <img
+                    src="img/journeyIcon.png"
+                    class=""
+                    alt="Orkestra Retail"
+                  />
+                </div>
+                <div class="col-md-11">
+                  <h5 class="mb-0">
+                    Orkestra<sup>TM</sup> is ready for installation
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-5">
+            <div class="col-md-12 col-lg-12 text-center">
+              <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="market-retail-sec  pt-0">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<button type="button" class="btn cancel-btn" id="cancel-four">Cancel</button>
+						<button type="button" class="btn next-btn ">Done</button>
+					</div>
+				</div>
+			</div>
+		</div>-->
+    </section>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".wiz-head ul li").on("click", function () {
+          $(this).siblings().removeClass("active");
+          $(this).addClass("active");
+        });
+      });
+      /*$( document ).ready(function() {
+			$(".cust-type").on('click', function(){
+				if($(this).is(':checked'))
+					$(this).css('color','red');  
+				else
+					$(this).css('color','yellow');
+			})
+		});	*/
+    function getId()
+    {
+      console.log(journeyNames)
+      axios({
+        method: "post",
+        url: "/api/getJourneyDataExtensionByKey",
+        data : journeyNames
+       // headers: { "Content-Type": "text/xml" },
+      })
+      .then((response)=>
+      {
+        console.log(response)
+      })
+      .catch((err)=>
+      {
+        console.log(err)
+      })
+    }
+      $("#CartAbandon").on("click", function (event) {
+        var CartAbandon = $(this).attr("data-journeyKey");
+        //$("#myLnk").data("id")
+        console.log(CartAbandon);
+      });
+      $(document).ready(function () {
+        $(".market-channels").on("click", function () {
+          $(this).siblings().removeClass("active");
+          $(this).addClass("active");
+        });
+      });
+      $(document).ready(function () {
+        $("#marketing-assets").hide();
+        $("#marketing-retail").hide();
+        $("#marketing-review").hide();
+        $(".progress-bar").attr("style", "width: 25%");
+        $("#next-one").on("click", function () {
+          $("#marketing-product").hide();
+          $("#marketing-retail").hide();
+          $("#marketing-review").hide();
+          $("#marketing-assets").show();
+          $(".progress-bar").attr("style", "width: 50%");
+        });
+        $("#next-two").on("click", function () {
+          $("#marketing-product").hide();
+          $("#marketing-assets").hide();
+          $("#marketing-review").hide();
+          $("#marketing-retail").show();
+          $(".progress-bar").attr("style", "width: 75%");
+        });
+        $("#next-three").on("click", function () {
+          $("#marketing-product").hide();
+          $("#marketing-retail").hide();
+          $("#marketing-assets").hide();
+          $("#marketing-review").show();
+          $(".progress-bar").attr(
+            "style",
+            "width: 100%;background-color:#99d24f !important;"
+          );
+          $(".progress-bar").css("color", "#99d24f");
+        });
+        $("#cancel-two").on("click", function () {
+          $("#marketing-retail").hide();
+          $("#marketing-assets").hide();
+          $("#marketing-review").hide();
+          $("#marketing-product").show();
+          $(".progress-bar").attr("style", "width: 25%");
+        });
+        $("#cancel-three").on("click", function () {
+          $("#marketing-product").hide();
+          $("#marketing-retail").hide();
+          $("#marketing-review").hide();
+          $("#marketing-assets").show();
+          $(".progress-bar").attr("style", "width: 50%");
+        });
+        $("#cancel-four").on("click", function () {
+          $("#marketing-product").hide();
+          $("#marketing-assets").hide();
+          $("#marketing-review").hide();
+          $("#marketing-retail").show();
+          $(".progress-bar").attr("style", "width: 75%");
+        });
+      });
+    </script>
+  </body>
+</html>
